@@ -59,7 +59,7 @@ namespace TopicVisualizer
 
         private void WordTopicControl_Paint(object sender, PaintEventArgs e)
         {
-            var topicCount = 10;
+            var topicCount = 50;
             var wordCount = 50;
 
             var startX = 160;

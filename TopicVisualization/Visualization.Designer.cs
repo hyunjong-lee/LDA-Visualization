@@ -29,31 +29,29 @@
         private void InitializeComponent()
         {
             this.panelWordTopicDist = new System.Windows.Forms.Panel();
-            this.wordTopicControl = new TopicVisualizer.WordTopicControl();
+            this.wordTopicControl1 = new TopicVisualizer.WordTopicControl();
             this.panelWordTopicDist.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelWordTopicDist
             // 
             this.panelWordTopicDist.AutoScroll = true;
-            this.panelWordTopicDist.Controls.Add(this.wordTopicControl);
+            this.panelWordTopicDist.Controls.Add(this.wordTopicControl1);
             this.panelWordTopicDist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelWordTopicDist.Location = new System.Drawing.Point(0, 0);
             this.panelWordTopicDist.Name = "panelWordTopicDist";
             this.panelWordTopicDist.Size = new System.Drawing.Size(834, 437);
             this.panelWordTopicDist.TabIndex = 0;
             // 
-            // wordTopicControl
+            // wordTopicControl1
             // 
-            this.wordTopicControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.wordTopicControl.BackColor = System.Drawing.Color.White;
-            this.wordTopicControl.Font = new System.Drawing.Font("Malgun Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.wordTopicControl.Location = new System.Drawing.Point(3, 4);
-            this.wordTopicControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.wordTopicControl.Name = "wordTopicControl";
-            this.wordTopicControl.Size = new System.Drawing.Size(831, 578);
-            this.wordTopicControl.TabIndex = 1;
+            this.wordTopicControl1.BackColor = System.Drawing.Color.White;
+            this.wordTopicControl1.Font = new System.Drawing.Font("Malgun Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.wordTopicControl1.Location = new System.Drawing.Point(3, 4);
+            this.wordTopicControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.wordTopicControl1.Name = "wordTopicControl1";
+            this.wordTopicControl1.Size = new System.Drawing.Size(1233, 1216);
+            this.wordTopicControl1.TabIndex = 0;
             // 
             // Visualization
             // 
@@ -74,7 +72,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panelWordTopicDist;
-        private TopicVisualizer.WordTopicControl wordTopicControl;
+        private TopicVisualizer.WordTopicControl wordTopicControl1;
     }
 }
 

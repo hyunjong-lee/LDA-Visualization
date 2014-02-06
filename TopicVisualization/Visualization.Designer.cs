@@ -36,6 +36,7 @@
             // panelWordTopicDist
             // 
             this.panelWordTopicDist.AutoScroll = true;
+            this.panelWordTopicDist.BackColor = System.Drawing.Color.White;
             this.panelWordTopicDist.Controls.Add(this.wordTopicControl1);
             this.panelWordTopicDist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelWordTopicDist.Location = new System.Drawing.Point(0, 0);
@@ -50,7 +51,7 @@
             this.wordTopicControl1.Location = new System.Drawing.Point(3, 4);
             this.wordTopicControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.wordTopicControl1.Name = "wordTopicControl1";
-            this.wordTopicControl1.Size = new System.Drawing.Size(1233, 1216);
+            this.wordTopicControl1.Size = new System.Drawing.Size(773, 385);
             this.wordTopicControl1.TabIndex = 0;
             // 
             // Visualization

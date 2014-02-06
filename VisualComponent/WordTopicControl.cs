@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Core.Data;
 using VisualComponent;
 using System.Drawing.Drawing2D;
 using Core.Model;
@@ -17,26 +18,26 @@ namespace TopicVisualizer
     {
         private int _topWordCount = 10;
         private LDAModel _ldaModel;
+        private Parameter _parameter;
         private List<List<Tuple<int, double>>> _topicTopWordDist;
         private HashSet<int> _topWordSet;
-
-        private List<ButtonInfo> _buttonInfoList;
 
         public WordTopicControl()
         {
             InitializeComponent();
         }
 
-        public void UpdateTopicModel(LDAModel model, int topWordCount = 10)
+        public void UpdateTopicModel(LDAModel model, Parameter parameter, int topWordCount = 5)
         {
             _ldaModel = model;
+            _parameter = parameter;
             _topWordCount = topWordCount;
 
-            var topicCount = _ldaModel.Parameter.TopicCount;
+            var topicCount = _parameter.TopicCount;
 
             // extract top words from each topic
             _topicTopWordDist = new List<List<Tuple<int, double>>>(topicCount);
-            foreach (var topicId in Enumerable.Range(0, model.Parameter.TopicCount))
+            foreach (var topicId in Enumerable.Range(0, _parameter.TopicCount))
             {
                 _topicTopWordDist.Add(
                     model.Phi[topicId]
@@ -53,22 +54,38 @@ namespace TopicVisualizer
                 .OrderBy(e => e));
 
             // resize
-        }
-
-        private void WordTopicControl_Paint(object sender, PaintEventArgs e)
-        {
-            var topicCount = 50;
-            var wordCount = 50;
-
             var startX = 160;
             var startY = 160;
 
             var len = 30;
             var width = len * (topicCount - 1);
+            var height = len * (_topWordSet.Count - 1);
+
+            var totalWidth = startX + width + 50;
+            var totalHeight = startY + height + 50;
+
+            Width = totalWidth;
+            Height = totalHeight;
+        }
+
+        private void WordTopicControl_Paint(object sender, PaintEventArgs e)
+        {
+            if (_ldaModel == null) return;
+            if (_parameter == null) return;
+            if (_topWordSet == null) return;
+
+            var topicCount = _parameter.TopicCount;
+            var wordCount = _topWordSet.Count;
+
+            const int startX = 160;
+            const int startY = 160;
+
+            var len = 30;
+            var width = len * (topicCount - 1);
             var height = len * (wordCount - 1);
 
-            var textBoxWidth = 120;
-            var textBoxHeight = 30;
+            const int textBoxWidth = 120;
+            const int textBoxHeight = 30;
 
             var graphic = e.Graphics;
             graphic.SmoothingMode = SmoothingMode.AntiAlias;
@@ -81,7 +98,8 @@ namespace TopicVisualizer
                 var rect = new Rectangle(startX + topicId * len - len / 2, 10, textBoxHeight, textBoxWidth);
 
                 graphic.DrawRectangle(pen, rect);
-                graphic.DrawString("Topic 0", font, brush, rect,
+                var topicTitle = string.Format("Topic {0}", topicId);
+                graphic.DrawString(topicTitle, font, brush, rect,
                     new StringFormat {
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center,
@@ -95,7 +113,8 @@ namespace TopicVisualizer
                 var rect = new Rectangle(10, startY + wordIdx * len - 30 / 2, textBoxWidth, textBoxHeight);
 
                 graphic.DrawRectangle(pen, rect);
-                graphic.DrawString("Word 0", font, brush, rect,
+                var word = _topWordSet.ElementAt(wordIdx).ToWord();
+                graphic.DrawString(word, font, brush, rect,
                     new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
 
                 graphic.DrawLine(pen, startX, startY + wordIdx * len, startX + width, startY + wordIdx * len);
@@ -103,11 +122,16 @@ namespace TopicVisualizer
 
             foreach (var topicId in Enumerable.Range(0, topicCount))
             {
+                var topProb = _topicTopWordDist[topicId][0].Item2;
                 foreach (var wordIdx in Enumerable.Range(0, wordCount))
                 {
                     var x = startX + topicId * len;
                     var y = startY + wordIdx * len;
-                    var rect = new Rectangle(x - 25, y - 25, 50, 50);
+                    var wordProb =
+                        _topicTopWordDist[topicId].FirstOrDefault(elem => elem.Item1 == _topWordSet.ElementAt(wordIdx));
+                    var relativeSize = 0;
+                    if (wordProb != null) relativeSize = (int) (50*wordProb.Item2/topProb);
+                    var rect = new Rectangle(x - relativeSize / 2, y - relativeSize / 2, relativeSize, relativeSize);
                     graphic.DrawEllipse(pen, rect);
                     graphic.FillEllipse(transBrush, rect);
                 }
@@ -137,21 +161,7 @@ namespace TopicVisualizer
 
         private void WordTopicControl_Load(object sender, EventArgs e)
         {
-            var topicCount = 50;
-            var wordCount = 50;
 
-            var startX = 160;
-            var startY = 160;
-
-            var len = 30;
-            var width = len * (topicCount - 1);
-            var height = len * (wordCount - 1);
-
-            var totalWidth = startX + width + 50;
-            var totalHeight = startY + height + 50;
-
-            Width = totalWidth;
-            Height = totalHeight;
         }
     }
 }

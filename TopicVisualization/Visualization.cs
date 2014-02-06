@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Core.Data;
+using Core.Model;
+using Core.Helper;
 
 namespace TopicVisualization
 {
@@ -19,6 +22,11 @@ namespace TopicVisualization
 
         private void Visualization_Load(object sender, EventArgs e)
         {
+            var modelPath = @"D:\Model";
+            var ldaModel = modelPath.Import<LDAModel>();
+            var parameter = modelPath.Import<Parameter>();
+            ModelHelper.ImportVoca(modelPath);
+            wordTopicControl1.UpdateTopicModel(ldaModel, parameter);
         }
     }
 }

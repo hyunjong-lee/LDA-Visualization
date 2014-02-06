@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Core.Model;
-using Core.Data;
 using VisualComponent;
 using System.Drawing.Drawing2D;
+using Core.Model;
 
 namespace TopicVisualizer
 {
@@ -54,7 +53,6 @@ namespace TopicVisualizer
                 .OrderBy(e => e));
 
             // resize
-            // ???
         }
 
         private void WordTopicControl_Paint(object sender, PaintEventArgs e)
@@ -65,7 +63,7 @@ namespace TopicVisualizer
             var startX = 160;
             var startY = 160;
 
-            var len = 40;
+            var len = 30;
             var width = len * (topicCount - 1);
             var height = len * (wordCount - 1);
 
@@ -135,6 +133,25 @@ namespace TopicVisualizer
         private void WordTopicControl_MouseUp(object sender, MouseEventArgs e)
         {
 
+        }
+
+        private void WordTopicControl_Load(object sender, EventArgs e)
+        {
+            var topicCount = 50;
+            var wordCount = 50;
+
+            var startX = 160;
+            var startY = 160;
+
+            var len = 30;
+            var width = len * (topicCount - 1);
+            var height = len * (wordCount - 1);
+
+            var totalWidth = startX + width + 50;
+            var totalHeight = startY + height + 50;
+
+            Width = totalWidth;
+            Height = totalHeight;
         }
     }
 }

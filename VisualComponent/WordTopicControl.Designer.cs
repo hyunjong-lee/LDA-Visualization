@@ -40,6 +40,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "WordTopicControl";
             this.Size = new System.Drawing.Size(375, 372);
+            this.Load += new System.EventHandler(this.WordTopicControl_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.WordTopicControl_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WordTopicControl_MouseDown);
             this.MouseLeave += new System.EventHandler(this.WordTopicControl_MouseLeave);
